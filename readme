@@ -1,128 +1,154 @@
 
-```markdown
-# EV Market Analysis Dashboard
+````markdown
+# ⚡ EV Market Analysis Dashboard
 
 ![Dashboard Screenshot](https://github.com/sumit3162/EV-Market-Analysis-Dashboard/blob/main/image%20copy.png)
 
-An interactive dashboard for analyzing India's Electric Vehicle market using advanced segmentation techniques without merging datasets.
-
-## Features
-
-- **Three Analytical Techniques**:
-  - Cross-dataset correlation analysis
-  - Geographic heatmap overlays
-  - Market readiness scoring
-
-- **Interactive Visualizations**:
-  - Animated charts and progress bars
-  - Dynamic Leaflet maps with dual heatmaps
-  - Filterable city readiness tables
-
-- **Technical Highlights**:
-  - Dataset independence - no merging required
-  - Responsive Bootstrap 5 design
-  - Animated transitions between views
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/ev-market-analysis.git
-   cd ev-market-analysis
-   ```
-
-2. Install dependencies (none required for static version):
-   ```bash
-   # For development with Python backend:
-   pip install pandas folium scikit-learn
-   ```
-
-3. Open in browser:
-   - Simply open `index.html` in any modern browser
-   - For development server:
-     ```bash
-     python -m http.server 8000
-     ```
-     Then visit `http://localhost:8000`
-
-## Data Requirements
-
-Place these files in the `data/` directory:
-
-- `ev_sales.csv` - EV registration counts by city
-- `charging_stations.csv` - Charging infrastructure data
-- `pollution_data.csv` - Air quality metrics (CPCB format)
-
-Sample datasets are provided in `data/sample/`.
-
-## Usage
-
-1. **Correlation Analysis**:
-   - View relationship between EV adoption and charging infrastructure
-   - Animated correlation meter shows strength of relationship
-
-2. **Dual Heatmap**:
-   - Compare EV density (red) vs charging stations (blue)
-   - Toggle animation with the switch control
-   - Click markers for city details
-
-3. **Readiness Scores**:
-   - Filter cities by name
-   - Select cities to view score composition radar chart
-   - Progress bars animate to their values
-
-## Customization
-
-To adapt for your own data:
-
-1. Modify the data loading in `scripts/main.js`:
-   ```javascript
-   const evData = {
-     'your-city': 1500,
-     // Add your data
-   };
-   ```
-
-2. Update map coordinates in `scripts/map.js`:
-   ```javascript
-   const cities = {
-     'your-city': { lat: 12.345, lng: 67.890, ev: 1500, chargers: 120 }
-   };
-   ```
-
-3. Adjust scoring weights in `scripts/scores.js`:
-   ```javascript
-   const weights = {
-     adoption: 0.4,
-     infrastructure: 0.3,
-     pollution: 0.3
-   };
-   ```
-
-## Development
-
-Built with:
-- [Bootstrap 5](https://getbootstrap.com/)
-- [Chart.js](https://www.chartjs.org/)
-- [Leaflet](https://leafletjs.com/)
-- [Plotly](https://plotly.com/javascript/)
-
-Project structure:
-```
-ev-market-analysis/
-├── data/               # Data files
-├── scripts/            # JavaScript modules
-│   ├── main.js         # Core functionality
-│   ├── correlation.js  # Correlation analysis
-│   ├── map.js          # Map visualization
-│   └── scores.js       # Readiness scoring
-├── styles/             # CSS files
-├── index.html          # Main dashboard
-└── README.md           # This file
-```
-
-## License
-
-MIT License. See [LICENSE](LICENSE) for details.
+An interactive, front-end dashboard to analyze India's Electric Vehicle (EV) market using smart visualizations and segmentation—**without merging datasets**.
 
 ---
+
+## 🔍 Overview
+
+This project provides insights into the Indian EV landscape with:
+
+- **Independent dataset analytics** (no joins required)
+- **Visual tools** for understanding adoption, infrastructure, and environment
+- **Fully responsive** and animated interface
+
+---
+
+## 🚀 Features
+
+### 🧠 Analytical Techniques
+- **Cross-dataset Correlation Analysis** – EV sales vs charging infra.
+- **Geographic Heatmaps** – Dual overlays for adoption & infra.
+- **Market Readiness Scoring** – Composite index with radar and progress bars.
+
+### 📊 Visualizations
+- Leaflet-based dynamic maps
+- Animated progress bars and radar charts
+- Toggleable city-level insights
+
+### 💻 Technical Stack
+- **Frontend**: HTML, CSS, JavaScript, Bootstrap 5, Leaflet.js
+- **Optional Backend**: Python (for data preprocessing)
+- **Libraries**: `pandas`, `folium`, `scikit-learn`
+
+---
+
+## 🛠️ Installation
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/sumit3162/EV-Market-Analysis-Dashboard.git
+cd EV-Market-Analysis-Dashboard
+````
+
+### 2. Install Python Dependencies (For dynamic backend)
+
+```bash
+pip install pandas folium scikit-learn
+```
+
+### 3. Launch Dashboard
+
+* **Static version**:
+  Open `index.html` directly in any browser.
+
+* **Local server (recommended)**:
+
+```bash
+python -m http.server 8000
+# Then go to http://localhost:8000
+```
+
+---
+
+## 📁 Data Requirements
+
+Place the following files into the `data/` directory:
+
+| File Name               | Description                                  |
+| ----------------------- | -------------------------------------------- |
+| `ev_sales.csv`          | EV registrations by city                     |
+| `charging_stations.csv` | EV charging infrastructure                   |
+| `pollution_data.csv`    | Pollution and air quality data (CPCB format) |
+
+> Sample data is included under `data/sample/`
+
+---
+
+## 🧪 How to Use
+
+### 1. 🔗 Correlation View
+
+* Correlates EV adoption with infrastructure
+* Real-time animated gauge meter for visual strength
+
+### 2. 🗺️ Dual Heatmaps
+
+* EV density (🔴 red) vs Charging infra (🔵 blue)
+* Toggle animation with switch
+* City markers show EV & charger counts
+
+### 3. 📈 Readiness Scoreboard
+
+* Filter/search cities
+* Radar chart shows adoption vs infra vs pollution
+* Progress bars animate to final readiness score
+
+---
+
+## 🛠️ Customization Guide
+
+### ➕ Add Your Data
+
+**Modify** `scripts/main.js`:
+
+```js
+const evData = {
+  'your-city': 1500,
+  // Add more
+};
+```
+
+**Update** `scripts/map.js`:
+
+```js
+const cities = {
+  'your-city': { lat: 12.345, lng: 67.890, ev: 1500, chargers: 120 }
+};
+```
+
+**Adjust** scoring weights in `scripts/scores.js`:
+
+```js
+const weights = {
+  adoption: 0.4,
+  infrastructure: 0.3,
+  pollution: 0.3
+};
+```
+
+---
+
+## 📜 License
+
+Licensed under the **MIT License**.
+See the full license text in the [LICENSE](LICENSE) file.
+
+---
+
+## 🙌 Contributions
+
+Pull requests and suggestions are welcome!
+For major changes, please open an issue first.
+
+---
+
+## 🌐 Connect
+
+Created with ❤️ by [Sumit Shingane](https://github.com/sumit3162)
+
+```
