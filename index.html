@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India EV Market Analysis Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .dashboard-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .positive {
+            background-color: #e8f5e9;
+            border-left: 5px solid #2e7d32;
+        }
+        .warning {
+            background-color: #fff8e1;
+            border-left: 5px solid #ff8f00;
+        }
+        #map-container {
+            height: 500px;
+            width: 100%;
+        }
+        .tab-content {
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <div class="container">
+            <h1><i class="bi bi-ev-station"></i> India EV Market Analysis</h1>
+            <p class="lead">Comprehensive segmentation without data merging</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Key Metrics Row -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="metric-card positive">
+                    <h3 id="total-evs">12,458</h3>
+                    <p>Total EVs Registered</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card positive">
+                    <h3 id="charging-stations">1,842</h3>
+                    <p>Public Charging Stations</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card warning">
+                    <h3 id="ev-per-charger">6.7</h3>
+                    <p>EVs per Charger</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <h3 id="top-city">Bangalore</h3>
+                    <p>Leading EV City</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Tabs -->
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="ev-tab" data-bs-toggle="tab" data-bs-target="#ev-tab-pane" type="button">EV Adoption</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="charging-tab" data-bs-toggle="tab" data-bs-target="#charging-tab-pane" type="button">Charging Infrastructure</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis-tab-pane" type="button">Market Analysis</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="dashboardTabsContent">
+            <!-- EV Adoption Tab -->
+            <div class="tab-pane fade show active" id="ev-tab-pane" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Top EV Cities</h5>
+                                <div id="ev-bar-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">EV Growth Trend</h5>
+                                <canvas id="evTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">EV Penetration by State</h5>
+                                <div id="ev-map" style="height: 500px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charging Infrastructure Tab -->
+            <div class="tab-pane fade" id="charging-tab-pane" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Charging Station Distribution</h5>
+                                <div id="charging-pie-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Charger Types</h5>
+                                <canvas id="chargerTypeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Charging Network Map</h5>
+                                <div id="map-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Analysis Tab -->
+            <div class="tab-pane fade" id="analysis-tab-pane" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">EV vs Charging Correlation</h5>
+                                <canvas id="correlationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Market Readiness Index</h5>
+                                <div id="radar-chart" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Segmentation Analysis</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Segment</th>
+                                                <th>Cities</th>
+                                                <th>EV Count</th>
+                                                <th>Chargers</th>
+                                                <th>EV/Charger Ratio</th>
+                                                <th>Readiness Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="segmentation-table">
+                                            <!-- Data will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data - replace with your actual data
+        const evData = {
+            cities: ["Bangalore", "Delhi", "Mumbai", "Hyderabad", "Chennai", "Pune", "Ahmedabad", "Kolkata", "Jaipur", "Lucknow"],
+            counts: [3250, 2800, 2450, 1800, 1500, 1350, 1200, 1100, 950, 850],
+            trends: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                data: [850, 920, 1050, 1200, 1350, 1500]
+            }
+        };
+
+        const chargingData = {
+            types: ["Fast", "Slow", "Superfast"],
+            counts: [450, 1200, 192],
+            cities: ["Bangalore", "Delhi", "Mumbai", "Hyderabad", "Chennai"],
+            stations: [320, 280, 240, 180, 150]
+        };
+
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // EV Bar Chart
+            Plotly.newPlot('ev-bar-chart', [{
+                x: evData.cities,
+                y: evData.counts,
+                type: 'bar',
+                marker: {
+                    color: '#2e7d32'
+                }
+            }], {
+                margin: { t: 0 }
+            });
+
+            // EV Trend Chart
+            new Chart(
+                document.getElementById('evTrendChart'),
+                {
+                    type: 'line',
+                    data: {
+                        labels: evData.trends.labels,
+                        datasets: [{
+                            label: 'EV Registrations',
+                            data: evData.trends.data,
+                            borderColor: '#2e7d32',
+                            backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        }
+                    }
+                }
+            );
+
+            // Charging Pie Chart
+            Plotly.newPlot('charging-pie-chart', [{
+                values: chargingData.stations,
+                labels: chargingData.cities,
+                type: 'pie',
+                hole: 0.4
+            }], {
+                margin: { t: 0 }
+            });
+
+            // Charger Type Chart
+            new Chart(
+                document.getElementById('chargerTypeChart'),
+                {
+                    type: 'doughnut',
+                    data: {
+                        labels: chargingData.types,
+                        datasets: [{
+                            data: chargingData.counts,
+                            backgroundColor: [
+                                '#3498db',
+                                '#e74c3c',
+                                '#f1c40f'
+                            ]
+                        }]
+                    }
+                }
+            );
+
+            // Correlation Chart
+            new Chart(
+                document.getElementById('correlationChart'),
+                {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Cities',
+                            data: [
+                                {x: 320, y: 3250},
+                                {x: 280, y: 2800},
+                                {x: 240, y: 2450},
+                                {x: 180, y: 1800},
+                                {x: 150, y: 1500}
+                            ],
+                            backgroundColor: '#2e7d32'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Number of Charging Stations'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Number of EVs'
+                                }
+                            }
+                        }
+                    }
+                }
+            );
+
+            // Radar Chart
+            Plotly.newPlot('radar-chart', [{
+                type: 'scatterpolar',
+                r: [85, 72, 90, 65, 78],
+                theta: ['Infrastructure', 'Policy', 'Adoption', 'Awareness', 'Affordability'],
+                fill: 'toself',
+                fillcolor: 'rgba(46, 125, 50, 0.2)',
+                line: {
+                    color: '#2e7d32'
+                }
+            }], {
+                polar: {
+                    radialaxis: {
+                        visible: true,
+                        range: [0, 100]
+                    }
+                },
+                margin: { t: 0 }
+            });
+
+            // Populate segmentation table
+            const tableData = [
+                { segment: "Early Adopters", cities: "Bangalore, Delhi", evCount: 6050, chargers: 600, ratio: 10.1, score: 85 },
+                { segment: "Growth Markets", cities: "Mumbai, Hyderabad", evCount: 4250, chargers: 420, ratio: 10.1, score: 72 },
+                { segment: "Emerging Cities", cities: "Chennai, Pune", evCount: 2850, chargers: 330, ratio: 8.6, score: 65 },
+                { segment: "Untapped Potential", cities: "Ahmedabad, Kolkata", evCount: 2300, chargers: 280, ratio: 8.2, score: 58 }
+            ];
+
+            const tableBody = document.getElementById('segmentation-table');
+            tableData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.segment}</td>
+                    <td>${row.cities}</td>
+                    <td>${row.evCount.toLocaleString()}</td>
+                    <td>${row.chargers.toLocaleString()}</td>
+                    <td>${row.ratio.toFixed(1)}</td>
+                    <td>${row.score}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            // Initialize map (simplified - would use Leaflet/Mapbox in real implementation)
+            document.getElementById('map-container').innerHTML = `
+                <div style="text-align: center; padding: 100px 0; background-color: #f5f5f5; border-radius: 8px;">
+                    <h5>Interactive Charging Station Map Would Appear Here</h5>
+                    <p>In a full implementation, this would show charging stations on a map of India</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

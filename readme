@@ -1,0 +1,100 @@
+
+```markdown
+# EV Market Analysis Dashboard
+
+![Dashboard Screenshot](https://github.com/sumit3162/EV-Market-Analysis-Dashboard/blob/main/image%20copy.png)
+
+An interactive dashboard for analyzing India's Electric Vehicle market using advanced segmentation techniques without merging datasets.
+
+## Features
+
+- **Three Analytical Techniques**:
+  - Cross-dataset correlation analysis
+  - Geographic heatmap overlays
+  - Market readiness scoring
+
+- **Interactive Visualizations**:
+  - Animated charts and progress bars
+  - Dynamic Leaflet maps with dual heatmaps
+  - Filterable city readiness tables
+
+- **Technical Highlights**:
+  - Dataset independence - no merging required
+  - Responsive Bootstrap 5 design
+  - Animated transitions between views
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sumit3162/EV-Market-Analysis-Dashboard.git
+   cd ev-market-analysis
+   ```
+
+2. Install dependencies (none required for static version):
+   ```bash
+   # For development with Python backend:
+   pip install pandas folium scikit-learn
+   ```
+
+3. Open in browser:
+   - Simply open `index.html` in any modern browser
+   - For development server:
+     ```bash
+     python -m http.server 8000
+     ```
+     Then visit `http://localhost:8000`
+
+## Data Requirements
+
+Place these files in the `data/` directory:
+
+- `ev_sales.csv` - EV registration counts by city
+- `charging_stations.csv` - Charging infrastructure data
+- `pollution_data.csv` - Air quality metrics (CPCB format)
+
+Sample datasets are provided in `data/sample/`.
+
+## Usage
+
+1. **Correlation Analysis**:
+   - View relationship between EV adoption and charging infrastructure
+   - Animated correlation meter shows strength of relationship
+
+2. **Dual Heatmap**:
+   - Compare EV density (red) vs charging stations (blue)
+   - Toggle animation with the switch control
+   - Click markers for city details
+
+3. **Readiness Scores**:
+   - Filter cities by name
+   - Select cities to view score composition radar chart
+   - Progress bars animate to their values
+
+## Customization
+
+To adapt for your own data:
+
+1. Modify the data loading in `scripts/main.js`:
+   ```javascript
+   const evData = {
+     'your-city': 1500,
+     // Add your data
+   };
+   ```
+
+2. Update map coordinates in `scripts/map.js`:
+   ```javascript
+   const cities = {
+     'your-city': { lat: 12.345, lng: 67.890, ev: 1500, chargers: 120 }
+   };
+   ```
+
+3. Adjust scoring weights in `scripts/scores.js`:
+   ```javascript
+   const weights = {
+     adoption: 0.4,
+     infrastructure: 0.3,
+     pollution: 0.3
+   };
+   ```
