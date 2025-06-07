@@ -27,7 +27,7 @@ An interactive dashboard for analyzing India's Electric Vehicle market using adv
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/sumit3162/EV-Market-Analysis-Dashboard.git
+   git clone https://github.com/yourusername/ev-market-analysis.git
    cd ev-market-analysis
    ```
 
@@ -98,3 +98,31 @@ To adapt for your own data:
      pollution: 0.3
    };
    ```
+
+## Development
+
+Built with:
+- [Bootstrap 5](https://getbootstrap.com/)
+- [Chart.js](https://www.chartjs.org/)
+- [Leaflet](https://leafletjs.com/)
+- [Plotly](https://plotly.com/javascript/)
+
+Project structure:
+```
+ev-market-analysis/
+├── data/               # Data files
+├── scripts/            # JavaScript modules
+│   ├── main.js         # Core functionality
+│   ├── correlation.js  # Correlation analysis
+│   ├── map.js          # Map visualization
+│   └── scores.js       # Readiness scoring
+├── styles/             # CSS files
+├── index.html          # Main dashboard
+└── README.md           # This file
+```
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+---
